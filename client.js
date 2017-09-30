@@ -15,3 +15,7 @@
 //    then data is being broadcasted from the server, pipe that data out to your 
 //    terminal's standard output stream.
 
+
+console.log('how to test client here');
+
+const net = require('net');
