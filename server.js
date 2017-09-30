@@ -15,10 +15,12 @@
 //3. Each connected socket is a **Duplex** stream, when it emits a 'data' event, 
 //   broadcast the data to all sockets.
 
-//  use nodemon = npm install -g nodemon
 
+//  use nodemon = npm install -g nodemon
+// create server create connection very important most research there due to callbacks etc. TCP
 
 console.log('how to test server here'); 
+
 const net = require('net');
 
 var clients = [];
@@ -26,18 +28,24 @@ var clients = [];
 const server = net.createServer((socket) => {
   // socket is a duplex stream
 });
+  // 'connection' listener
+  console.log('client connected');
 
-server.listen(3000, ()=> {
-  console.log('server listening on port 3000');
+  socket.on('end', () => {
+    console.log('client disconnected');
+  });
+  socket.write('hello\r\n');
+
+  sockett.pipe(scoket);
+};
+
+server.on('error', (err) => {
+  throw err;
 });
-//jons end-code
 
-
-
-
-
-
-
+server.listen(6969, '0.0.0.0' ()=> {
+  console.log('server listening on port 3000 %j' + server.address());
+});
 
 
 // tubeTut
