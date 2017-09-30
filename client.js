@@ -23,11 +23,24 @@ const client = net.createConnection({ port: 6969 }, () => {
   client.write('world!\r\n');
 });
 
-client.on('data', (data) => {
-  console.log(data.toString());
-  client.end();
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('readable', () => {
+  const chunk = process.stdin.read();
+  if (chunk !== null) {
+    process.stdout.write(`data: ${chunk}`);
+  }
 });
 
-client.on('end', () => {
-  console.log('disconnected from server');
+process.stdin.on('end', () => {
+  process.stdout.write('end');
 });
+
+client.on('data', (data) => {
+  console.log(data.toString());
+
+});
+
+// client.on('end', () => {
+//   console.log('disconnected from server');
+// });

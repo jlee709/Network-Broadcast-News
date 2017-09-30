@@ -27,23 +27,24 @@ var clients = [];
 //jons code
 const server = net.createServer((socket) => {
   // socket is a duplex stream
-});
-  // 'connection' listener
   console.log('client connected');
 
   socket.on('end', () => {
     console.log('client disconnected');
   });
+  
   socket.write('hello\r\n');
 
-  sockett.pipe(scoket);
-};
+  socket.pipe(socket);
+});
+  // 'connection' listener
+
 
 server.on('error', (err) => {
   throw err;
 });
 
-server.listen(6969, '0.0.0.0' ()=> {
+server.listen(6969, '0.0.0.0', ()=> {
   console.log('server listening on port 3000 %j' + server.address());
 });
 
