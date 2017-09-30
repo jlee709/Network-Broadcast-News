@@ -24,7 +24,7 @@ console.log('how to test server here');
 const net = require('net');
 
 var clients = [];
-//jons code
+
 const server = net.createServer((socket) => {
   // socket is a duplex stream
   console.log('client connected');
@@ -32,11 +32,12 @@ const server = net.createServer((socket) => {
   socket.on('end', () => {
     console.log('client disconnected');
   });
-  
+
   socket.write('hello\r\n');
 
   socket.pipe(socket);
 });
+
   // 'connection' listener
 
 
@@ -45,7 +46,7 @@ server.on('error', (err) => {
 });
 
 server.listen(6969, '0.0.0.0', ()=> {
-  console.log('server listening on port 3000 %j' + server.address());
+  console.log('server listening on port 3000 ' + server.address());
 });
 
 

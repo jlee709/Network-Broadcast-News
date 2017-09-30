@@ -38,8 +38,9 @@ process.stdin.on('end', () => {
 
 client.on('data', (data) => {
   console.log(data.toString());
-
 });
+
+
 
 // client.on('end', () => {
 //   console.log('disconnected from server');
