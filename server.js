@@ -24,8 +24,10 @@ console.log('how to test server here');
 const net = require('net');
 const PORT = process.env.PORT || 6969;
 const clients = [];
+const admin = '[ADMIN]';
 
 
+// fires msg from sender to the clients 
 const broadcast = (sender, message) => clients
 .filter(c => c !== sender)
 .forEach(c => {
@@ -33,16 +35,15 @@ const broadcast = (sender, message) => clients
   c.write(message);
 });
 
+
+
 const server = net.createServer((client) => {
   // registerclient into cliemts
   console.log('client conntected');
   clients.push(client);
-
   client.username = null;
   // prompt user
-
   client.write("what is your user name? \n");
-
   client.on('data', (data) => {
     if(client.username === null){
       // set username to data 
@@ -58,6 +59,11 @@ const server = net.createServer((client) => {
 server.listen(PORT, () => {
   console.log(`listening to ${PORT}`);
 });
+
+
+
+
+
 
 
 
