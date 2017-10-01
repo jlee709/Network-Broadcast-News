@@ -15,6 +15,7 @@
 
 
 const net = require('net');
+const PORT = process.env.PORT || 6969;
 
 const client = net.createConnection({ port: 6969 }, () => {
   //'connect' listener
@@ -32,6 +33,10 @@ process.stdin.on('readable', () => {
   }
 });
 
+process.stdin.on('data', data => {
+  client.write(data);
+});
+
 process.stdin.on('end', () => {
   process.stdout.write('end');
 });
@@ -39,8 +44,6 @@ process.stdin.on('end', () => {
 client.on('data', (data) => {
   console.log(data.toString());
 });
-
-
 
 // client.on('end', () => {
 //   console.log('disconnected from server');

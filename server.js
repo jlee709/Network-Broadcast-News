@@ -22,32 +22,43 @@
 console.log('how to test server here'); 
 
 const net = require('net');
+const PORT = process.env.PORT || 6969;
+const clients = [];
 
-var clients = [];
 
-const server = net.createServer((socket) => {
-  // socket is a duplex stream
-  console.log('client connected');
+const broadcast = (sender, message) => clients
+.filter(c => c !== sender)
+.forEach(c => {
+  console.log(c);
+  c.write(message);
+});
 
-  socket.on('end', () => {
-    console.log('client disconnected');
+const server = net.createServer((client) => {
+  // registerclient into cliemts
+  console.log('client conntected');
+  clients.push(client);
+
+  client.username = null;
+  // prompt user
+
+  client.write("what is your user name? \n");
+
+  client.on('data', (data) => {
+    if(client.username === null){
+      // set username to data 
+      client.username = data.toString();
+      client.write(`Welcome ${client.username}`);
+    }else{
+      broadcast(client, data.toString());
+    }
   });
-
-  socket.write('hello\r\n');
-
-  socket.pipe(socket);
 });
 
-  // 'connection' listener
 
-
-server.on('error', (err) => {
-  throw err;
+server.listen(PORT, () => {
+  console.log(`listening to ${PORT}`);
 });
 
-server.listen(6969, '0.0.0.0', ()=> {
-  console.log('server listening on port 3000 ' + server.address());
-});
 
 
 // tubeTut
@@ -61,3 +72,9 @@ server.listen(6969, '0.0.0.0', ()=> {
 // }
 
 // http.createServer(onRequest).listen(6969);
+
+
+
+
+
+//old code 
