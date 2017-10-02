@@ -1,3 +1,4 @@
+// jshint esversion:6
 // net library 
 // "create server" will be used in server.js
 // "create connection" method (used in client.js)
@@ -18,33 +19,29 @@ const net = require('net');
 const PORT = process.env.PORT || 6969;
 
 
-const client = net.createConnection({ port: 6969 }, () => {
+const client = net.createConnection(PORT, () => {
   //'connect' listener
 
   console.log('connected to server!');
-  client.write('world!\r\n');
+  process.stdin.pipe(client);
+  client.pipe(process.stdout);
 });
 
-process.stdin.setEncoding('utf8');
 
-process.stdin.on('readable', () => {
-  const chunk = process.stdin.read();
-  if (chunk !== null) {
-    process.stdout.write(`data: ${chunk}`);
-  }
-});
+// process.stdin.setEncoding('utf8');
 
-process.stdin.on('data', data => {
-  client.write(data);
-});
+
+// process.stdin.on('data', data => {
+//   client.write(data);
+// });
 
 process.stdin.on('end', () => {
   process.stdout.write('end');
 });
 
-client.on('data', (data) => {
-  console.log(data.toString());
-});
+// client.on('data', (data) => {
+//   console.log(data.toString());
+// });
 
 // client.on('end', () => {
 //   console.log('disconnected from server');
